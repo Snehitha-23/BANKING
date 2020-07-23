@@ -1,0 +1,134 @@
+import java.util.Scanner;
+abstract class transaction
+{  
+Scanner scan=new Scanner(System.in);
+String name;
+long  accountNumber;
+int balance=10000;
+   public transaction()
+{
+    System.out.println("enter name");
+    this.name=scan.nextLine();
+    System.out.println("enter account number");
+    this.accountNumber=scan.nextInt(); 
+ } 
+	abstract public void deposit();
+	abstract public void withDraw();
+	abstract public void balance();		
+}
+ class SavingsAccount extends transaction
+ {
+	 public void deposit()
+	 {
+		 System.out.println("enter the amount to deposit");
+		 this.balance+=scan.nextInt();
+	 }
+	 public void withDraw()
+	 {
+		 if(this.balance<5000)
+			 System.out.println("min 5000 balance is needed for transactions");
+		 else
+		 {
+			 System.out.println("enter amount to withdraw");
+			 int withdrawAmount=scan.nextInt();
+			 if(withdrawAmount>5000)
+				 System.out.println("max withdraw amount is 5000 only");
+			 else
+			 {
+				 if(this.balance>withdrawAmount)
+				   this.balance-=withdrawAmount;
+				 else
+				System.out.println("InSufficient Amount");
+			 }
+		 }
+	 }
+	 public void balance()
+	 {
+		 System.out.println(this.balance);
+	 }
+ }
+ class CurrentAccount extends transaction
+ {
+	 public void deposit()
+	 {
+		 System.out.println("enter the amount to deposit");
+		 this.balance+=scan.nextInt();
+	 }
+	 public void withDraw()
+	 {   System.out.println("enter amount to withdraw");
+	    if(this.balance>0)
+	    {
+		 int withdrawAmount=scan.nextInt();
+		 if(this.balance>withdrawAmount)
+		 this.balance-=withdrawAmount;
+		 else
+		 System.out.println("InSufficient amount");
+	    }
+	   else
+	  System.out.println("your balance is 0");
+	 }
+	 public void balance()
+	 {
+		 System.out.println(this.balance);
+	 }
+ }
+	
+public class Banking {
+
+	public static void main(String[] args) 
+	{   int option,choose,select;
+		System.out.println("enter one option");
+		System.out.println("1.savings account");
+		System.out.println("2.current account");
+		 Scanner scan=new Scanner(System.in);
+		 option=scan.nextInt();
+		if(option==1)
+		{	
+			SavingsAccount customer = new SavingsAccount();
+			do {
+			System.out.println("Enter any option");
+			System.out.println("1.Deposit");
+			System.out.println("2.Withdraw");
+			System.out.println("3.Check Balance");
+			choose=scan.nextInt();
+			switch(choose) {
+			case 1:
+				customer.deposit();
+				break;
+			case 2:
+				customer.withDraw();break;
+			case 3:
+				customer.balance();break;
+			}
+			System.out.println("Press 1 to continue or 2 to exit");
+			select=scan.nextInt();
+		      }while(select==1);
+		}	
+		else
+		{
+			CurrentAccount customer = new CurrentAccount();
+			System.out.println("Enter any option");
+			System.out.println("1.Deposit");
+			System.out.println("2.Withdraw");
+			System.out.println("3.Check Balance");
+			choose=scan.nextInt();
+			do {
+			switch(choose) {
+			case 1:
+				customer.deposit();
+				break;
+			case 2:
+				customer.withDraw();break;
+			case 3:
+				customer.balance();break;
+			}
+			System.out.println("Press 1 to continue or 2 to exit");
+			select=scan.nextInt();
+		      }while(select==1);
+			  
+		}
+		
+
+	}
+
+}
